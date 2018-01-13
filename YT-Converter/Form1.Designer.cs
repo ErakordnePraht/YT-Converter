@@ -61,7 +61,7 @@
             this.formatBox.Location = new System.Drawing.Point(12, 76);
             this.formatBox.Name = "formatBox";
             this.formatBox.Size = new System.Drawing.Size(59, 21);
-            this.formatBox.TabIndex = 2;
+            this.formatBox.TabIndex = 1;
             this.formatBox.SelectedIndexChanged += new System.EventHandler(this.formatBox_SelectedIndexChanged);
             // 
             // label2
@@ -99,7 +99,7 @@
             this.tõmba.Location = new System.Drawing.Point(12, 114);
             this.tõmba.Name = "tõmba";
             this.tõmba.Size = new System.Drawing.Size(75, 23);
-            this.tõmba.TabIndex = 6;
+            this.tõmba.TabIndex = 2;
             this.tõmba.Text = "Tõmba";
             this.tõmba.UseVisualStyleBackColor = true;
             this.tõmba.Click += new System.EventHandler(this.tõmba_Click);
@@ -124,8 +124,9 @@
             this.Controls.Add(this.formatBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.linkBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "YT-Converter";
             this.ResumeLayout(false);
             this.PerformLayout();
 
