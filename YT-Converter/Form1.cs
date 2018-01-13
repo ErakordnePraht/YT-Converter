@@ -20,6 +20,7 @@ namespace YT_Converter
         public string link;
         public string formaat;
         public string kõik;
+        public int playlistVideoNumber;
 
         public Form1()
         {
@@ -78,33 +79,61 @@ namespace YT_Converter
                         convert.StartInfo.CreateNoWindow = true;
                         convert.StartInfo.RedirectStandardOutput = true;
                         convert.Start();
-                        for (int a = 0; a < 6; a++)
+                        if (!link.Contains("list"))
                         {
-                            kõik = convert.StandardOutput.ReadLine();
+                            for (int a = 0; a < 6; a++)
+                            {
+                                kõik = convert.StandardOutput.ReadLine();
+                            }
+                            playlistVideoNumber = 1;
                         }
-                        while (protsent != 100)
+                        else
                         {
-                            kõik = convert.StandardOutput.ReadLine();
-                            if (kõik != null)
+                            for (int a = 0; a < 13; a++)
                             {
-                                string Protsenttekst = kõik.Substring(11, 6);
-                                Protsenttekst = Regex.Match(Protsenttekst, @"\d+").Value;
-                                try
+                                kõik = convert.StandardOutput.ReadLine();
+                                if (a == 2)
                                 {
-                                    protsent = Int32.Parse(Protsenttekst);
+                                    kõik = Regex.Match(kõik, @"\d+").Value;
+                                    playlistVideoNumber = Int32.Parse(kõik);
                                 }
-                                catch (Exception)
-                                {
-                                    MessageBox.Show("See fail juba eksisteerib");
-                                    throw;
-                                }
-                                progressBar1.Value = protsent;
                             }
-                            else
+                        }
+                        for (int i = 0; i < playlistVideoNumber; i++)
+                        {
+                            while (protsent != 100)
                             {
-                                MessageBox.Show("Link ei tööta");
-                                break;
+                                kõik = convert.StandardOutput.ReadLine();
+                                if (kõik != null)
+                                {
+                                    string Protsenttekst = kõik.Substring(11, 6);
+                                    Protsenttekst = Regex.Match(Protsenttekst, @"\d+").Value;
+                                    try
+                                    {
+                                        protsent = Int32.Parse(Protsenttekst);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        MessageBox.Show("See fail juba eksisteerib");
+                                        throw;
+                                    }
+                                    progressBar1.Value = protsent;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Link ei tööta");
+                                    playlistVideoNumber = 0;
+                                    break;
+                                }
+                                if (protsent == 100 && link.Contains("playlist"))
+                                {
+                                    for (int b = 0; b < 10; b++)
+                                    {
+                                        kõik = convert.StandardOutput.ReadLine();
+                                    }
+                                }
                             }
+                            protsent = 0;
                         }
                         convert.WaitForExit();
                     }
@@ -113,16 +142,24 @@ namespace YT_Converter
                         convert.Start();
                         convert.WaitForExit();
                     }
-                    if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4"))
+                    if (!link.Contains("list"))
+                    {
+                        if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4"))
+                        {
+                            MessageBox.Show("Fail lõpetas tõmbamise");
+                            progressBar1.Value = 0;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Miski on valesti");
+                            progressBar1.Value = 0;
+                        }  
+                    }
+                    else
                     {
                         MessageBox.Show("Fail lõpetas tõmbamise");
                         progressBar1.Value = 0;
                     }
-                    else
-                    {
-                        MessageBox.Show("Miski on valesti");
-                        progressBar1.Value = 0;
-                    } 
                 }
                 else
                 {
@@ -139,47 +176,69 @@ namespace YT_Converter
     {
         public string SetArgument(Process convert, string formaat, string path, string link)
         {
-            var fileName = new Process
+            string failiNimi = "wololololo";
+            if (!link.Contains("list"))
             {
-                StartInfo = new ProcessStartInfo
+                var fileName = new Process
                 {
-                    FileName = "youtube-dl.exe",
-                    Arguments = "--get-filename " + link,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
-            };
-            fileName.Start();
-            string failiNimi = fileName.StandardOutput.ReadToEnd();
-            fileName.WaitForExit();
-            failiNimi = failiNimi.Replace("\n", "");
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "youtube-dl.exe",
+                        Arguments = "--get-filename " + link,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    }
+                };
+                fileName.Start();
+                failiNimi = fileName.StandardOutput.ReadToEnd();
+                fileName.WaitForExit();
+                failiNimi = failiNimi.Replace("\n", "");
 
-            if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
-            {
-                convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
-            }
-            else
-            {
-                int indexNumber = failiNimi.IndexOf(".");
-                if (indexNumber > 0)
+                if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
                 {
-                    failiNimi = failiNimi.Substring(0, indexNumber);
-                }
-                failiNimi = failiNimi + ".mp4";
-                if (formaat == "mp4@720p")
-                {
-                    convert.StartInfo.Arguments = "-f 22 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
                 }
                 else
                 {
-                    convert.StartInfo.Arguments = "-f 18 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    int indexNumber = failiNimi.IndexOf(".");
+                    if (indexNumber > 0)
+                    {
+                        failiNimi = failiNimi.Substring(0, indexNumber);
+                    }
+                    failiNimi = failiNimi + ".mp4";
+                    if (formaat == "mp4@720p")
+                    {
+                        convert.StartInfo.Arguments = "-f 22 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    }
+                    else
+                    {
+                        convert.StartInfo.Arguments = "-f 18 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    }
                 }
+                int indexNumber2 = failiNimi.IndexOf(".");
+                if (indexNumber2 > 0)
+                {
+                    failiNimi = failiNimi.Substring(0, indexNumber2);
+                } 
             }
-            int indexNumber2 = failiNimi.IndexOf(".");
-            if (indexNumber2 > 0)
+            else
             {
-                failiNimi = failiNimi.Substring(0, indexNumber2);
+                if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
+                {
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " " + link;
+                }
+                else
+                {
+                    if (formaat == "mp4@720p")
+                    {
+                        convert.StartInfo.Arguments = "-f 22 " + link;
+                    }
+                    else
+                    {
+                        convert.StartInfo.Arguments = "-f 18 " + link;
+                    }
+                }
             }
             return failiNimi;
         }
