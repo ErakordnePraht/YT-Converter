@@ -49,6 +49,7 @@ namespace YT_Converter
             {
                 path = fbd.SelectedPath;
             }
+            File.WriteAllText("Directory.txt", path);
         }
 
         private void checkKonsool_CheckedChanged(object sender, EventArgs e)
@@ -59,9 +60,13 @@ namespace YT_Converter
         private void tõmba_Click(object sender, EventArgs e)
         {
             int protsent = 0;
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(path) && !File.Exists("Directory.txt"))
             {
                 path = Directory.GetCurrentDirectory();
+            }
+            else if (File.Exists("Directory.txt"))
+            {
+                path = File.ReadAllText("Directory.txt");
             }
 
             if (Convert.ToString(formatBox.SelectedItem) != "" || link != "")
@@ -203,14 +208,11 @@ namespace YT_Converter
                 if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
                 {
                     convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
                 else
                 {
-                    int indexNumber = failiNimi.IndexOf(".");
-                    if (indexNumber > 0)
-                    {
-                        failiNimi = failiNimi.Substring(0, indexNumber);
-                    }
+                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                     failiNimi = failiNimi + ".mp4";
                     if (formaat == "mp4@720p")
                     {
@@ -220,12 +222,8 @@ namespace YT_Converter
                     {
                         convert.StartInfo.Arguments = "-f 18 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
                     }
+                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
-                int indexNumber2 = failiNimi.IndexOf(".");
-                if (indexNumber2 > 0)
-                {
-                    failiNimi = failiNimi.Substring(0, indexNumber2);
-                } 
             }
             else
             {
