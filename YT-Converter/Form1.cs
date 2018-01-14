@@ -21,6 +21,7 @@ namespace YT_Converter
         public string formaat;
         public string kõik;
         public int playlistVideoNumber;
+        public bool esimeneValueOlemas = false;
 
         public Form1()
         {
@@ -92,10 +93,14 @@ namespace YT_Converter
                             for (int a = 0; a < 13; a++)
                             {
                                 kõik = convert.StandardOutput.ReadLine();
-                                if (a == 2)
+                                string videodeNumber = Regex.Match(kõik, @"\d+").Value;
+                                if (kõik.Contains("Downloading " + videodeNumber + " videos") && !esimeneValueOlemas)
                                 {
-                                    kõik = Regex.Match(kõik, @"\d+").Value;
-                                    playlistVideoNumber = Int32.Parse(kõik);
+                                    if (kõik != "")
+                                    {
+                                        playlistVideoNumber = Int32.Parse(videodeNumber);
+                                        esimeneValueOlemas = true;
+                                    }
                                 }
                             }
                         }
@@ -125,7 +130,7 @@ namespace YT_Converter
                                     playlistVideoNumber = 0;
                                     break;
                                 }
-                                if (protsent == 100 && link.Contains("playlist"))
+                                if (protsent == 100 && link.Contains("list"))
                                 {
                                     for (int b = 0; b < 10; b++)
                                     {
