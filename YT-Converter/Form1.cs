@@ -133,6 +133,7 @@ namespace YT_Converter
                                 {
                                     MessageBox.Show("Link ei tööta");
                                     playlistVideoNumber = 0;
+                                    linkBox.Text = "";
                                     break;
                                 }
                                 if (protsent == 100 && link.Contains("list"))
@@ -158,22 +159,26 @@ namespace YT_Converter
                         {
                             MessageBox.Show("Fail lõpetas tõmbamise");
                             progressBar1.Value = 0;
+                            linkBox.Text = "";
                         }
                         else
                         {
                             MessageBox.Show("Miski on valesti");
                             progressBar1.Value = 0;
-                        }  
+                            linkBox.Text = "";
+                        }
                     }
                     else
                     {
                         MessageBox.Show("Fail lõpetas tõmbamise");
                         progressBar1.Value = 0;
+                        linkBox.Text = "";
                     }
                 }
                 else
                 {
                     MessageBox.Show("See fail juba eksisteerib");
+                    linkBox.Text = "";
                 }
             }
             else
