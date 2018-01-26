@@ -155,7 +155,7 @@ namespace YT_Converter
                     }
                     if (!link.Contains("list"))
                     {
-                        if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4"))
+                        if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4") || File.Exists(path + @"\" + failiNimi))
                         {
                             MessageBox.Show("Fail lõpetas tõmbamise");
                             progressBar1.Value = 0;
@@ -209,15 +209,14 @@ namespace YT_Converter
                 failiNimi = fileName.StandardOutput.ReadToEnd();
                 fileName.WaitForExit();
                 failiNimi = failiNimi.Replace("\n", "");
+                failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("-"));
 
                 if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
                 {
-                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
-                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "." + formaat + "\"" + " " + link;
                 }
                 else
                 {
-                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                     failiNimi = failiNimi + ".mp4";
                     if (formaat == "mp4@720p")
                     {
