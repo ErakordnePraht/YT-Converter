@@ -13,6 +13,7 @@ namespace YT_Converter
         public string kõik;
         public int playlistVideoNumber;
         public bool esimeneValueOlemas = false;
+        public string TXTFail { get; set; }
 
         public Form1()
         {
@@ -63,7 +64,7 @@ namespace YT_Converter
                 }
             }
 
-            if (Convert.ToString(formatBox.SelectedItem) != "" || link != "")
+            if (Convert.ToString(formatBox.SelectedItem) != "" && link != "" || !string.IsNullOrWhiteSpace(TXTFail))
             {
                 Process convert = new Process();
                 SetStartInfo set = new SetStartInfo();
@@ -71,21 +72,33 @@ namespace YT_Converter
 
                 formaat = Convert.ToString(formatBox.SelectedItem);
                 convert.StartInfo.FileName = "youtube-dl.exe";
-                var failiNimi = set.SetArgument(convert, formaat, path, link);
+                var failiNimi = set.SetArgument(convert, formaat, path, link, TXTFail);
 
                 if (!fileExists.Exist(failiNimi, formaat, path))
                 {
                     if (!checkKonsool.Checked)
                     {
                         StartConverter startConverter1 = new StartConverter();
-                        startConverter1.Start(convert, linkBox, progressBar1, link);
+                        startConverter1.Start(convert, linkBox, progressBar1, link, TXTFail);
                     }
                     else
                     {
                         convert.Start();
                         convert.WaitForExit();
                     }
-                    if (!link.Contains("list"))
+                    if (!string.IsNullOrWhiteSpace(TXTFail))
+                    {
+                        MessageBox.Show("Fail lõpetas tõmbamise");
+                        progressBar1.Value = 0;
+                        linkBox.Text = "";
+                    }
+                    else if (link.Contains("playlist"))
+                    {
+                        MessageBox.Show("Fail lõpetas tõmbamise");
+                        progressBar1.Value = 0;
+                        linkBox.Text = "";
+                    }
+                    else
                     {
                         if (fileExists.Exist(failiNimi, formaat, path))
                         {
@@ -100,12 +113,7 @@ namespace YT_Converter
                             linkBox.Text = "";
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Fail lõpetas tõmbamise");
-                        progressBar1.Value = 0;
-                        linkBox.Text = "";
-                    }
+                    TXTFail = "";
                 }
                 else
                 {
@@ -116,6 +124,19 @@ namespace YT_Converter
             else
             {
                 MessageBox.Show("Palun täida kõik väljad");
+            }
+        }
+        void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string filePath in files)
+            {
+                TXTFail = filePath;
             }
         }
     }

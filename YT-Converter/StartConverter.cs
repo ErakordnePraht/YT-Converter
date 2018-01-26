@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Linq;
 
 namespace YT_Converter
 {
     class StartConverter
     {
-        public void Start(Process convert, TextBox linkBox, ProgressBar progressBar1, string link)
+        public void Start(Process convert, TextBox linkBox, ProgressBar progressBar1, string link, string TXTFail)
         {
             int playlistVideoNumber = 1;
             int protsent = 0;
@@ -18,15 +20,30 @@ namespace YT_Converter
             convert.StartInfo.CreateNoWindow = true;
             convert.StartInfo.RedirectStandardOutput = true;
             convert.Start();
-            if (!link.Contains("list"))
+            if (string.IsNullOrWhiteSpace(TXTFail))
             {
                 for (int a = 0; a < 6; a++)
                 {
                     kõik = convert.StandardOutput.ReadLine();
                 }
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(TXTFail))
             {
+                for (int a = 0; a < 6; a++)
+                {
+                    kõik = convert.StandardOutput.ReadLine();
+                }
+                if (!string.IsNullOrWhiteSpace(TXTFail))
+                {
+                    playlistVideoNumber = File.ReadLines(TXTFail).Count();
+                }
+            }
+            else if (link.Contains("playlist"))
+            {
+                for (int a = 0; a < 6; a++)
+                {
+                    kõik = convert.StandardOutput.ReadLine();
+                }
                 for (int a = 0; a < 13; a++)
                 {
                     kõik = convert.StandardOutput.ReadLine();
@@ -41,6 +58,7 @@ namespace YT_Converter
                     }
                 }
             }
+
             for (int i = 0; i < playlistVideoNumber; i++)
             {
                 while (protsent != 100)
@@ -72,9 +90,16 @@ namespace YT_Converter
                                 linkBox.Text = "";
                                 break;
                             }
-                            if (protsent == 100 && link.Contains("list"))
+                            if (protsent == 100 && link.Contains("playlist"))
                             {
                                 for (int b = 0; b < 10; b++)
+                                {
+                                    kõik = convert.StandardOutput.ReadLine();
+                                }
+                            }
+                            else if (protsent == 100 && !string.IsNullOrWhiteSpace(TXTFail))
+                            {
+                                for (int b = 0; b < 8; b++)
                                 {
                                     kõik = convert.StandardOutput.ReadLine();
                                 }

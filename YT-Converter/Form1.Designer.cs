@@ -124,6 +124,9 @@
             this.Controls.Add(this.formatBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.linkBox);
+            this.AllowDrop = true;
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.Text = "YT-Converter";
