@@ -57,6 +57,10 @@ namespace YT_Converter
             else if (File.Exists("Directory.txt"))
             {
                 path = File.ReadAllText("Directory.txt");
+                if (!Directory.Exists(path))
+                {
+                    path = Directory.GetCurrentDirectory();
+                }
             }
 
             if (Convert.ToString(formatBox.SelectedItem) != "" || link != "")
