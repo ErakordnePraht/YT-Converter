@@ -9,6 +9,6 @@ Peale praktikat otsustasin teha parema versiooni [meie tehtud YT-Converterist](h
 - Salvestatud faili locationi valimine
 
 ## TODO
-- [ ] TXT failist linkide tõmbamine
-- [ ] loetavamaks tegemine (teen StartConverter'il erinevad voidid playlisti või TXTFailist tõmbamisel)
+- [X] TXT failist linkide tõmbamine
+- [X] loetavamaks tegemine (teen StartConverter'il erinevad voidid playlisti või TXTFailist tõmbamisel)
 - [ ] ProgressBarile texti lisamine
