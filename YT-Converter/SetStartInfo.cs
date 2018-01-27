@@ -62,11 +62,14 @@ namespace YT_Converter
                 failiNimi = fileName.StandardOutput.ReadToEnd();
                 fileName.WaitForExit();
                 failiNimi = failiNimi.Replace("\n", "");
+                string fileType = failiNimi.Substring(failiNimi.LastIndexOf("."));
                 failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("-"));
 
                 if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
                 {
-                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "." + formaat + "\"" + " " + link;
+                    failiNimi = failiNimi + fileType;
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
                 else
                 {

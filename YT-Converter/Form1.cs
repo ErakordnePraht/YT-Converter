@@ -79,7 +79,18 @@ namespace YT_Converter
                     if (!checkKonsool.Checked)
                     {
                         StartConverter startConverter1 = new StartConverter();
-                        startConverter1.Start(convert, linkBox, progressBar1, link, TXTFail);
+                        if (!string.IsNullOrWhiteSpace(TXTFail))
+                        {
+                            startConverter1.StartTXTFile(convert, linkBox, progressBar1, link, TXTFail);
+                        }
+                        else if (link.Contains("playlist"))
+                        {
+                            startConverter1.StartPlaylist(convert, linkBox, progressBar1, link);
+                        }
+                        else
+                        {
+                            startConverter1.StartLink(convert, linkBox, progressBar1, link);
+                        }
                     }
                     else
                     {
@@ -138,6 +149,7 @@ namespace YT_Converter
             {
                 TXTFail = filePath;
             }
+            MessageBox.Show("TXTFail sisestatud");
         }
     }
 }
