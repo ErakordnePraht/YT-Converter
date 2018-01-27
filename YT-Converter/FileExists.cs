@@ -7,7 +7,7 @@ namespace YT_Converter
     {
         public bool Exist(string failiNimi, string formaat, string path)
         {
-            if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4") || File.Exists(path + @"\" + failiNimi))
+            if (File.Exists(path + @"\" + failiNimi + "." + formaat) || File.Exists(path + @"\" + failiNimi + ".mp4"))
             {
                 return true;
             }

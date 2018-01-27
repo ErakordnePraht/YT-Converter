@@ -1,14 +1,51 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace YT_Converter
 {
     class SetStartInfo
     {
-        public string SetArgument(Process convert, string formaat, string path, string link)
+        public string SetArgument(Process convert, string formaat, string path, string link, string TXTFail)
         {
             string failiNimi = "wololololo";
-            if (!link.Contains("list"))
+            if (string.IsNullOrWhiteSpace(link) && !string.IsNullOrWhiteSpace(TXTFail))
+            {
+                if (formaat == "wav" || formaat == "mp3" || formaat == "m4a")
+                {
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -a " + TXTFail;
+                }
+                else
+                {
+                    if (formaat == "mp4@720p")
+                    {
+                        convert.StartInfo.Arguments = "-f 22 -a " + TXTFail;
+                    }
+                    else
+                    {
+                        convert.StartInfo.Arguments = "-f 18 -a " + TXTFail;
+                    }
+                }
+            }
+            else if (link.Contains("playlist"))
+            {
+                if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
+                {
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " " + link;
+                }
+                else
+                {
+                    if (formaat == "mp4@720p")
+                    {
+                        convert.StartInfo.Arguments = "-f 22 " + link;
+                    }
+                    else
+                    {
+                        convert.StartInfo.Arguments = "-f 18 " + link;
+                    }
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(link))
             {
                 var fileName = new Process
                 {
@@ -25,11 +62,14 @@ namespace YT_Converter
                 failiNimi = fileName.StandardOutput.ReadToEnd();
                 fileName.WaitForExit();
                 failiNimi = failiNimi.Replace("\n", "");
+                string fileType = failiNimi.Substring(failiNimi.LastIndexOf("."));
                 failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("-"));
 
                 if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
                 {
-                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "." + formaat + "\"" + " " + link;
+                    failiNimi = failiNimi + fileType;
+                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
                 else
                 {
@@ -47,21 +87,7 @@ namespace YT_Converter
             }
             else
             {
-                if (formaat == "mp3" || formaat == "m4a" || formaat == "wav")
-                {
-                    convert.StartInfo.Arguments = "--extract-audio --audio-format " + formaat + " " + link;
-                }
-                else
-                {
-                    if (formaat == "mp4@720p")
-                    {
-                        convert.StartInfo.Arguments = "-f 22 " + link;
-                    }
-                    else
-                    {
-                        convert.StartInfo.Arguments = "-f 18 " + link;
-                    }
-                }
+                MessageBox.Show("Miski on valesti");
             }
             return failiNimi;
         }
