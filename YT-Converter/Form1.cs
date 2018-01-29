@@ -21,8 +21,7 @@ namespace YT_Converter
             formatBox.Items.Add("m4a");
             formatBox.Items.Add("mp3");
             formatBox.Items.Add("wav");
-            formatBox.Items.Add("mp4@720p");
-            formatBox.Items.Add("mp4@360p");
+            formatBox.Items.Add("mp4");
         }
         private void linkBox_TextChanged(object sender, EventArgs e)
         {

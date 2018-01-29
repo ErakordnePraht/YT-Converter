@@ -36,20 +36,27 @@
             this.checkKonsool = new System.Windows.Forms.CheckBox();
             this.tõmba = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.nimi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.add = new System.Windows.Forms.Button();
+            this.remove = new System.Windows.Forms.Button();
+            this.protsent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.eta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // linkBox
             // 
             this.linkBox.Location = new System.Drawing.Point(12, 28);
             this.linkBox.Name = "linkBox";
-            this.linkBox.Size = new System.Drawing.Size(164, 20);
+            this.linkBox.Size = new System.Drawing.Size(252, 20);
             this.linkBox.TabIndex = 0;
             this.linkBox.TextChanged += new System.EventHandler(this.linkBox_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 12);
+            this.label1.Location = new System.Drawing.Point(9, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 1;
@@ -58,7 +65,7 @@
             // formatBox
             // 
             this.formatBox.FormattingEnabled = true;
-            this.formatBox.Location = new System.Drawing.Point(12, 76);
+            this.formatBox.Location = new System.Drawing.Point(330, 28);
             this.formatBox.Name = "formatBox";
             this.formatBox.Size = new System.Drawing.Size(59, 21);
             this.formatBox.TabIndex = 1;
@@ -67,7 +74,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 60);
+            this.label2.Location = new System.Drawing.Point(327, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 3;
@@ -75,7 +82,7 @@
             // 
             // chooseDirectory
             // 
-            this.chooseDirectory.Location = new System.Drawing.Point(191, 28);
+            this.chooseDirectory.Location = new System.Drawing.Point(280, 28);
             this.chooseDirectory.Name = "chooseDirectory";
             this.chooseDirectory.Size = new System.Drawing.Size(28, 20);
             this.chooseDirectory.TabIndex = 4;
@@ -86,7 +93,7 @@
             // checkKonsool
             // 
             this.checkKonsool.AutoSize = true;
-            this.checkKonsool.Location = new System.Drawing.Point(93, 80);
+            this.checkKonsool.Location = new System.Drawing.Point(12, 271);
             this.checkKonsool.Name = "checkKonsool";
             this.checkKonsool.Size = new System.Drawing.Size(126, 17);
             this.checkKonsool.TabIndex = 5;
@@ -96,7 +103,7 @@
             // 
             // tõmba
             // 
-            this.tõmba.Location = new System.Drawing.Point(12, 114);
+            this.tõmba.Location = new System.Drawing.Point(12, 242);
             this.tõmba.Name = "tõmba";
             this.tõmba.Size = new System.Drawing.Size(75, 23);
             this.tõmba.TabIndex = 2;
@@ -106,16 +113,69 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 159);
+            this.progressBar1.Location = new System.Drawing.Point(93, 242);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(207, 23);
+            this.progressBar1.Size = new System.Drawing.Size(264, 23);
             this.progressBar1.TabIndex = 7;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nimi,
+            this.fileType,
+            this.protsent,
+            this.eta});
+            this.listView1.Location = new System.Drawing.Point(12, 54);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(425, 182);
+            this.listView1.TabIndex = 8;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // nimi
+            // 
+            this.nimi.Text = "Nimi";
+            this.nimi.Width = 149;
+            // 
+            // fileType
+            // 
+            this.fileType.Text = "File type";
+            // 
+            // add
+            // 
+            this.add.Location = new System.Drawing.Point(363, 242);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(34, 23);
+            this.add.TabIndex = 9;
+            this.add.Text = "+";
+            this.add.UseVisualStyleBackColor = true;
+            // 
+            // remove
+            // 
+            this.remove.Location = new System.Drawing.Point(403, 242);
+            this.remove.Name = "remove";
+            this.remove.Size = new System.Drawing.Size(34, 23);
+            this.remove.TabIndex = 10;
+            this.remove.Text = "-";
+            this.remove.UseVisualStyleBackColor = true;
+            // 
+            // protsent
+            // 
+            this.protsent.Text = "Protsent";
+            // 
+            // eta
+            // 
+            this.eta.Text = "ETA";
             // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 200);
+            this.ClientSize = new System.Drawing.Size(508, 330);
+            this.Controls.Add(this.remove);
+            this.Controls.Add(this.add);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tõmba);
             this.Controls.Add(this.checkKonsool);
@@ -124,12 +184,11 @@
             this.Controls.Add(this.formatBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.linkBox);
-            this.AllowDrop = true;
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.Text = "YT-Converter";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,6 +204,13 @@
         private System.Windows.Forms.CheckBox checkKonsool;
         private System.Windows.Forms.Button tõmba;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader nimi;
+        private System.Windows.Forms.ColumnHeader fileType;
+        private System.Windows.Forms.ColumnHeader protsent;
+        private System.Windows.Forms.ColumnHeader eta;
+        private System.Windows.Forms.Button add;
+        private System.Windows.Forms.Button remove;
     }
 }
 

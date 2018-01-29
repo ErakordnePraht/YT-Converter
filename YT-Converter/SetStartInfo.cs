@@ -17,7 +17,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    convert.StartInfo.Arguments = "youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -a " + TXTFail;
+                    convert.StartInfo.Arguments = "youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best -a " + TXTFail;
                 }
             }
             else if (link.Contains("playlist"))
@@ -28,7 +28,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    convert.StartInfo.Arguments = "youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' " + link;
+                    convert.StartInfo.Arguments = "youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best " + link;
                 }
             }
             else if (!string.IsNullOrWhiteSpace(link))
@@ -60,7 +60,7 @@ namespace YT_Converter
                 else
                 {
                     failiNimi = failiNimi + ".mp4";
-                    convert.StartInfo.Arguments = "-f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
+                    convert.StartInfo.Arguments = "-f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
                     failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
             }
