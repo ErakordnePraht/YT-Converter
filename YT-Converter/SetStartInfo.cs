@@ -17,14 +17,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    if (formaat == "mp4@720p")
-                    {
-                        convert.StartInfo.Arguments = "-f 22 -a " + TXTFail;
-                    }
-                    else
-                    {
-                        convert.StartInfo.Arguments = "-f 18 -a " + TXTFail;
-                    }
+                    convert.StartInfo.Arguments = "youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -a " + TXTFail;
                 }
             }
             else if (link.Contains("playlist"))
@@ -35,14 +28,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    if (formaat == "mp4@720p")
-                    {
-                        convert.StartInfo.Arguments = "-f 22 " + link;
-                    }
-                    else
-                    {
-                        convert.StartInfo.Arguments = "-f 18 " + link;
-                    }
+                    convert.StartInfo.Arguments = "youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' " + link;
                 }
             }
             else if (!string.IsNullOrWhiteSpace(link))
@@ -74,14 +60,7 @@ namespace YT_Converter
                 else
                 {
                     failiNimi = failiNimi + ".mp4";
-                    if (formaat == "mp4@720p")
-                    {
-                        convert.StartInfo.Arguments = "-f 22 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
-                    }
-                    else
-                    {
-                        convert.StartInfo.Arguments = "-f 18 -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
-                    }
+                    convert.StartInfo.Arguments = "-f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o \"" + path + @"\" + failiNimi + "\"" + " " + link;
                     failiNimi = failiNimi.Substring(0, failiNimi.LastIndexOf("."));
                 }
             }

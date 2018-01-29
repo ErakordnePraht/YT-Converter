@@ -63,8 +63,8 @@ namespace YT_Converter
                     path = Directory.GetCurrentDirectory();
                 }
             }
-
-            if (Convert.ToString(formatBox.SelectedItem) != "" && link != "" || !string.IsNullOrWhiteSpace(TXTFail))
+            //Alumine teeb kindlaks, et link ja formaat või txtfail ja formaat on sisestatud
+            if (Convert.ToString(formatBox.SelectedItem) != "" && link != "" || !string.IsNullOrWhiteSpace(TXTFail) && Convert.ToString(formatBox.SelectedItem) != "")
             {
                 Process convert = new Process();
                 SetStartInfo set = new SetStartInfo();
