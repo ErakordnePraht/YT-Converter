@@ -167,7 +167,8 @@ namespace YT_Converter
                 // Place a check mark next to the item.
                 item1.Checked = true;
                 item1.SubItems.Add(formaat);
-                listView1.Items.Add(item1); 
+                listView1.Items.Add(item1);
+                linkBox.Text = string.Empty;
             }
         }
     }
