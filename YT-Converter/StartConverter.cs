@@ -33,6 +33,7 @@ namespace YT_Converter
                     if (safeGuard == 5)
                     {
                         MessageBox.Show("Miski on valesti");
+                        break;
                     }
                 }
                 try

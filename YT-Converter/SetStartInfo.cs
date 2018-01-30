@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace YT_Converter
@@ -17,7 +18,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    convert.StartInfo.Arguments = "youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best -a " + TXTFail;
+                    convert.StartInfo.Arguments = "-f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best -a " + TXTFail;
                 }
             }
             else if (link.Contains("playlist"))
@@ -28,7 +29,7 @@ namespace YT_Converter
                 }
                 else
                 {
-                    convert.StartInfo.Arguments = "youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best " + link;
+                    convert.StartInfo.Arguments = "-f bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best " + link;
                 }
             }
             else if (!string.IsNullOrWhiteSpace(link))

@@ -30,7 +30,7 @@ namespace YT_Converter
 
         private void formatBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            formaat = Convert.ToString(formatBox.SelectedItem);
         }
 
         private void chooseDirectory_Click(object sender, EventArgs e)
@@ -62,55 +62,49 @@ namespace YT_Converter
                     path = Directory.GetCurrentDirectory();
                 }
             }
-            //Alumine teeb kindlaks, et link ja formaat või txtfail ja formaat on sisestatud
-            if (Convert.ToString(formatBox.SelectedItem) != "" && link != "" || !string.IsNullOrWhiteSpace(TXTFail) && Convert.ToString(formatBox.SelectedItem) != "")
+            if (listView1.Items.Count > 0)
             {
-                Process convert = new Process();
-                SetStartInfo set = new SetStartInfo();
-                FileExists fileExists = new FileExists();
-
-                formaat = Convert.ToString(formatBox.SelectedItem);
-                convert.StartInfo.FileName = "youtube-dl.exe";
-                var failiNimi = set.SetArgument(convert, formaat, path, link, TXTFail);
-
-                if (!fileExists.Exist(failiNimi, formaat, path))
+                foreach (ListViewItem item in listView1.Items)
                 {
-                    if (!checkKonsool.Checked)
+                    Process convert = new Process();
+                    SetStartInfo set = new SetStartInfo();
+                    FileExists fileExists = new FileExists();
+
+                    link = item.SubItems[0].Text;
+                    formaat = item.SubItems[1].Text;
+                    convert.StartInfo.FileName = "youtube-dl.exe";
+                    var failiNimi = set.SetArgument(convert, formaat, path, link, TXTFail);
+
+                    if (!fileExists.Exist(failiNimi, formaat, path))
                     {
-                        StartConverter startConverter1 = new StartConverter();
-                        if (!string.IsNullOrWhiteSpace(TXTFail))
+                        if (!checkKonsool.Checked)
                         {
-                            startConverter1.StartTXTFile(convert, linkBox, progressBar1, link, TXTFail);
-                        }
-                        else if (link.Contains("playlist"))
-                        {
-                            startConverter1.StartPlaylist(convert, linkBox, progressBar1, link);
+                            StartConverter startConverter1 = new StartConverter();
+                            if (!string.IsNullOrWhiteSpace(TXTFail))
+                            {
+                                startConverter1.StartTXTFile(convert, linkBox, progressBar1, link, TXTFail);
+                            }
+                            else if (link.Contains("playlist"))
+                            {
+                                startConverter1.StartPlaylist(convert, linkBox, progressBar1, link);
+                            }
+                            else
+                            {
+                                startConverter1.StartLink(convert, linkBox, progressBar1, link);
+                            }
                         }
                         else
                         {
-                            startConverter1.StartLink(convert, linkBox, progressBar1, link);
+                            convert.Start();
+                            convert.WaitForExit();
                         }
-                    }
-                    else
-                    {
-                        convert.Start();
-                        convert.WaitForExit();
-                    }
-                    if (!string.IsNullOrWhiteSpace(TXTFail))
-                    {
-                        MessageBox.Show("Fail lõpetas tõmbamise");
-                        progressBar1.Value = 0;
-                        linkBox.Text = "";
-                    }
-                    else if (link.Contains("playlist"))
-                    {
-                        MessageBox.Show("Fail lõpetas tõmbamise");
-                        progressBar1.Value = 0;
-                        linkBox.Text = "";
-                    }
-                    else
-                    {
-                        if (fileExists.Exist(failiNimi, formaat, path))
+                        if (!string.IsNullOrWhiteSpace(TXTFail))
+                        {
+                            MessageBox.Show("Fail lõpetas tõmbamise");
+                            progressBar1.Value = 0;
+                            linkBox.Text = "";
+                        }
+                        else if (link.Contains("playlist"))
                         {
                             MessageBox.Show("Fail lõpetas tõmbamise");
                             progressBar1.Value = 0;
@@ -118,17 +112,26 @@ namespace YT_Converter
                         }
                         else
                         {
-                            MessageBox.Show("Miski on valesti");
-                            progressBar1.Value = 0;
-                            linkBox.Text = "";
+                            if (fileExists.Exist(failiNimi, formaat, path))
+                            {
+                                MessageBox.Show("Fail lõpetas tõmbamise");
+                                progressBar1.Value = 0;
+                                linkBox.Text = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Miski on valesti");
+                                progressBar1.Value = 0;
+                                linkBox.Text = "";
+                            }
                         }
+                        TXTFail = "";
                     }
-                    TXTFail = "";
-                }
-                else
-                {
-                    MessageBox.Show("See fail juba eksisteerib");
-                    linkBox.Text = "";
+                    else
+                    {
+                        MessageBox.Show("See fail juba eksisteerib");
+                        linkBox.Text = "";
+                    } 
                 }
             }
             else
@@ -149,6 +152,23 @@ namespace YT_Converter
                 TXTFail = filePath;
             }
             MessageBox.Show("TXTFail sisestatud");
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void add_Click(object sender, EventArgs e)
+        {
+            if (formatBox.SelectedItem != null && link != "" && listView1.FindItemWithText(link) == null)
+            {
+                ListViewItem item1 = new ListViewItem(link, 0);
+                // Place a check mark next to the item.
+                item1.Checked = true;
+                item1.SubItems.Add(formaat);
+                listView1.Items.Add(item1); 
+            }
         }
     }
 }

@@ -35,14 +35,13 @@
             this.chooseDirectory = new System.Windows.Forms.Button();
             this.checkKonsool = new System.Windows.Forms.CheckBox();
             this.tõmba = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.listView1 = new System.Windows.Forms.ListView();
             this.nimi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.add = new System.Windows.Forms.Button();
             this.remove = new System.Windows.Forms.Button();
-            this.protsent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.eta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // linkBox
@@ -111,31 +110,24 @@
             this.tõmba.UseVisualStyleBackColor = true;
             this.tõmba.Click += new System.EventHandler(this.tõmba_Click);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(93, 242);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(264, 23);
-            this.progressBar1.TabIndex = 7;
-            // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nimi,
             this.fileType,
-            this.protsent,
-            this.eta});
+            this.status});
             this.listView1.Location = new System.Drawing.Point(12, 54);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(425, 182);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // nimi
             // 
             this.nimi.Text = "Nimi";
-            this.nimi.Width = 149;
+            this.nimi.Width = 118;
             // 
             // fileType
             // 
@@ -149,6 +141,7 @@
             this.add.TabIndex = 9;
             this.add.Text = "+";
             this.add.UseVisualStyleBackColor = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
             // 
             // remove
             // 
@@ -159,13 +152,17 @@
             this.remove.Text = "-";
             this.remove.UseVisualStyleBackColor = true;
             // 
-            // protsent
+            // status
             // 
-            this.protsent.Text = "Protsent";
+            this.status.Text = "Staatus";
+            this.status.Width = 77;
             // 
-            // eta
+            // progressBar1
             // 
-            this.eta.Text = "ETA";
+            this.progressBar1.Location = new System.Drawing.Point(93, 242);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(264, 23);
+            this.progressBar1.TabIndex = 11;
             // 
             // Form1
             // 
@@ -173,10 +170,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 330);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.remove);
             this.Controls.Add(this.add);
             this.Controls.Add(this.listView1);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tõmba);
             this.Controls.Add(this.checkKonsool);
             this.Controls.Add(this.chooseDirectory);
@@ -203,14 +200,13 @@
         private System.Windows.Forms.Button chooseDirectory;
         private System.Windows.Forms.CheckBox checkKonsool;
         private System.Windows.Forms.Button tõmba;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader nimi;
         private System.Windows.Forms.ColumnHeader fileType;
-        private System.Windows.Forms.ColumnHeader protsent;
-        private System.Windows.Forms.ColumnHeader eta;
         private System.Windows.Forms.Button add;
         private System.Windows.Forms.Button remove;
+        private System.Windows.Forms.ColumnHeader status;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
