@@ -98,13 +98,7 @@ namespace YT_Converter
                             convert.Start();
                             convert.WaitForExit();
                         }
-                        if (!string.IsNullOrWhiteSpace(TXTFail))
-                        {
-                            MessageBox.Show("Fail lõpetas tõmbamise");
-                            progressBar1.Value = 0;
-                            linkBox.Text = "";
-                        }
-                        else if (link.Contains("playlist"))
+                        if (!string.IsNullOrWhiteSpace(TXTFail) || link.Contains("playlist"))
                         {
                             MessageBox.Show("Fail lõpetas tõmbamise");
                             progressBar1.Value = 0;
@@ -131,7 +125,7 @@ namespace YT_Converter
                     {
                         MessageBox.Show("See fail juba eksisteerib");
                         linkBox.Text = "";
-                    } 
+                    }
                 }
             }
             else
