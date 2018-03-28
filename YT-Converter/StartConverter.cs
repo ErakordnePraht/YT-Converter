@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 
 namespace YT_Converter
 {
@@ -24,7 +25,6 @@ namespace YT_Converter
             {
                 consOutput = convert.StandardOutput.ReadLine();
             }
-
             while (protsent != 100)
             {
                 if (string.IsNullOrWhiteSpace(consOutput))
@@ -33,6 +33,7 @@ namespace YT_Converter
                     if (safeGuard == 5)
                     {
                         MessageBox.Show("Miski on valesti");
+                        break;
                     }
                 }
                 try
